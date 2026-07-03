@@ -58,6 +58,7 @@ kitty-class/
 | `total_solved` | Int | 총 풀이 횟수 |
 | `correct_count` | Int | 정답 횟수 |
 | `mastery_score` | Int | 이해도 점수 (0~100) |
+| `is_unlocked` | Boolean | 학교에서 배운 단원 여부 (`True`인 단원만 출제 대상) |
 
 ### 탭 3 — `rescue_dex_logs`
 | 컬럼 | 타입 | 설명 |
@@ -71,14 +72,22 @@ kitty-class/
 
 ## 4. 핵심 알고리즘
 
-### 4-A. 가중치 기반 문제 출제
+### 4-A. 가중치 기반 문제 출제 (잠금 단원 제외)
 ```
-가중치 W = max(10, 100 - mastery_score)
+출제 후보 = [t for t in topics if t.is_unlocked == True]
+가중치 W  = max(10, 100 - mastery_score)
 ```
-- `mastery_score`가 낮을수록(취약 단원) 가중치가 높아져 문제 노출 빈도 증가.
+- **`is_unlocked = False`인 단원(아직 학교에서 배우지 않은 단원)은 출제 후보에서 완전히 제외.**
+- 후보 단원이 없으면 "아직 배운 단원이 없어요! 🐱" 안내 메시지 표시.
+- 출제 후보 중 `mastery_score`가 낮을수록 가중치가 높아져 취약 단원이 더 자주 노출.
 - `mastery_score < 60`인 단원은 노출 확률 **약 2배** 이상 보장.
-- **이해도가 높은 단원(`mastery_score ≥ 80`)도 가중치 최솟값 `10`을 보장**하여 리마인드 목적의 복습 문제가 가끔 출제됨.
-- 구현: `random.choices(topics, weights=[max(10, 100-s) for s in mastery_scores])` 사용.
+- **이해도가 높은 단원(`mastery_score ≥ 80`)도 가중치 최솟값 `10`을 보장**하여 리마인드 복습 문제가 가끔 출제됨.
+- 구현: `random.choices(unlocked_topics, weights=[max(10, 100-s) for s in mastery_scores])` 사용.
+
+### 4-A-1. 단원 잠금 해제 방법
+- **설정 화면(또는 온보딩)에서 보호자/아이가 직접 학습한 단원을 체크** → `is_unlocked = True`로 저장.
+- 커리큘럼 순서대로 체크박스 목록 제공(1학기 1단원부터 순서대로 표시).
+- 새 사용자 최초 생성 시 모든 단원은 `is_unlocked = False`로 초기화.
 
 ### 4-B. 이해도 점수 갱신
 ```
