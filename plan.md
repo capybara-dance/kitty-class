@@ -19,7 +19,7 @@
 
 ```
 kitty-class/
-├── app.py                  # Streamlit 진입점 (페이지 라우팅)
+├── streamlit_app.py        # Streamlit 진입점 (페이지 라우팅)
 ├── pages/
 │   ├── 01_home.py          # 마이룸 & 고양이 대시보드
 │   ├── 02_adventure.py     # 학습(동물 구조 모험) 화면
@@ -31,7 +31,8 @@ kitty-class/
 │   └── cat.py              # 고양이 레벨/경험치 시스템
 ├── assets/
 │   └── style.css           # 커스텀 CSS (파스텔 테마)
-├── secrets.toml            # Streamlit secrets (로컬 전용, .gitignore)
+├── .env                    # 로컬 환경변수 (python-dotenv, .gitignore)
+├── .env.example            # 환경변수 예시 (Git에 포함)
 ├── requirements.txt
 └── plan.md
 ```
@@ -157,8 +158,10 @@ kitty-class/
 ### 1단계 — 기반 구축 (Prototype)
 - [ ] Google Cloud 서비스 계정 생성 & Sheets API 활성화
 - [ ] `core/sheets.py`: gspread 연동, 3개 탭 CRUD 함수 구현
-- [ ] Streamlit secrets 설정 (`secrets.toml`)
-- [ ] 기본 앱 실행 확인 (`app.py` 뼈대)
+- [ ] `.env` 파일 작성 및 `python-dotenv`로 로컬 환경변수 로드 설정
+- [ ] `.env.example` 작성 (키 이름만 포함, 값은 비워둠)
+- [ ] Streamlit Cloud 배포 시 Secrets 기능으로 동일 변수 주입
+- [ ] 기본 앱 실행 확인 (`streamlit_app.py` 뼈대)
 
 ### 2단계 — 문제 생성 엔진
 - [ ] `core/curriculum.py`: 12개 단원 템플릿 딕셔너리 정의
@@ -192,12 +195,19 @@ streamlit>=1.32.0
 gspread>=6.0.0
 oauth2client>=4.1.3
 pandas>=2.0.0
+python-dotenv>=1.0.0
 ```
 
 ---
 
 ## 9. 보안 / 운영 주의사항
 
-- Google 서비스 계정 키(`credentials.json`)는 **절대 Git에 커밋하지 않음** → `.gitignore`에 추가.
-- Streamlit Cloud의 **Secrets** 기능을 통해 키를 환경변수로 주입.
+- Google 서비스 계정 키(`credentials.json`) 및 `.env`는 **절대 Git에 커밋하지 않음** → `.gitignore`에 추가.
+- **로컬 개발:** `.env` 파일에 환경변수 저장, `python-dotenv`의 `load_dotenv()`로 로드.
+  ```
+  # .env.example
+  GOOGLE_CREDENTIALS_JSON={"type":"service_account",...}
+  SPREADSHEET_ID=your_spreadsheet_id
+  ```
+- **Streamlit Cloud 배포:** Secrets 기능을 통해 동일 환경변수를 주입 (`os.environ` 또는 `st.secrets` 공용 접근).
 - Google Sheets 공유 설정: 서비스 계정 이메일에만 **편집자** 권한 부여.
