@@ -73,11 +73,12 @@ kitty-class/
 
 ### 4-A. 가중치 기반 문제 출제
 ```
-가중치 W = 100 - mastery_score
+가중치 W = max(10, 100 - mastery_score)
 ```
 - `mastery_score`가 낮을수록(취약 단원) 가중치가 높아져 문제 노출 빈도 증가.
 - `mastery_score < 60`인 단원은 노출 확률 **약 2배** 이상 보장.
-- 구현: `random.choices(topics, weights=[W1, W2, ...])` 사용.
+- **이해도가 높은 단원(`mastery_score ≥ 80`)도 가중치 최솟값 `10`을 보장**하여 리마인드 목적의 복습 문제가 가끔 출제됨.
+- 구현: `random.choices(topics, weights=[max(10, 100-s) for s in mastery_scores])` 사용.
 
 ### 4-B. 이해도 점수 갱신
 ```
