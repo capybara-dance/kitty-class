@@ -1,0 +1,145 @@
+/* ═══════════════════════════════════════════════════
+   assets/style.css — 냥이의 수학 모험 파스텔 테마
+   팔레트: #FFB7C5 핑크 | #C8B2E8 연보라 | #B2E8D4 민트
+═══════════════════════════════════════════════════ */
+
+/* ── 배경 ── */
+.stApp {
+    background: linear-gradient(150deg, #FFF0F5 0%, #F5F0FF 50%, #F0FFF8 100%);
+}
+
+/* ── Streamlit 기본 UI 정리 ── */
+#MainMenu { visibility: hidden; }
+footer    { visibility: hidden; }
+header    { visibility: hidden; }
+
+/* ── 사이드바 ── */
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #fff0f5 0%, #f5f0ff 100%);
+    border-right: 2px solid #FFB7C5;
+}
+
+/* ── 공통 버튼 ── */
+.stButton > button {
+    background: linear-gradient(135deg, #FFB7C5 0%, #C8B2E8 100%);
+    color: white;
+    border: none;
+    border-radius: 24px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    padding: 0.55rem 1.4rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 4px 14px rgba(200, 178, 232, 0.45);
+}
+
+.stButton > button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(200, 178, 232, 0.65);
+}
+
+.stButton > button:active {
+    transform: translateY(0);
+}
+
+/* ── 고양이 아바타 ── */
+.cat-avatar {
+    font-size: 4.5rem;
+    text-align: center;
+    line-height: 1.1;
+    padding: 0.75rem 0;
+    filter: drop-shadow(0 4px 8px rgba(200, 178, 232, 0.5));
+}
+
+/* ── 말풍선 ── */
+.speech-bubble {
+    background: #ffffff;
+    border: 2px solid #FFB7C5;
+    border-radius: 20px;
+    padding: 1rem 1.5rem;
+    font-size: 1.05rem;
+    color: #555;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(255, 183, 197, 0.3);
+    line-height: 1.6;
+}
+
+/* ── 온보딩 중앙 박스 ── */
+.onboard-wrapper {
+    max-width: 480px;
+    margin: 2rem auto;
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 6px 28px rgba(200, 178, 232, 0.35);
+    text-align: center;
+}
+
+.onboard-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #C8B2E8;
+    margin-bottom: 0.2rem;
+}
+
+/* ── 문제 박스 ── */
+.question-box {
+    background: linear-gradient(135deg, #FFFDE7 0%, #FFF0F5 100%);
+    border: 2px solid #FFB7C5;
+    border-radius: 20px;
+    padding: 1.5rem 2rem;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    text-align: center;
+    color: #333;
+    white-space: pre-line;
+    box-shadow: 0 4px 14px rgba(255, 183, 197, 0.25);
+    margin: 0.8rem 0 1.2rem;
+}
+
+/* ── 정답/오답 피드백 ── */
+.feedback-correct {
+    background: #E8FFF0;
+    border: 2px solid #B2E8D4;
+    border-radius: 16px;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2E7D52;
+}
+
+.feedback-wrong {
+    background: #FFF5F5;
+    border: 2px solid #FFB7C5;
+    border-radius: 16px;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    font-size: 1.05rem;
+    color: #B53A3A;
+}
+
+/* ── 이해도 배지 ── */
+.badge-low      { color: #E53935; font-weight: 700; }
+.badge-mid      { color: #F57C00; font-weight: 700; }
+.badge-high     { color: #2E7D32; font-weight: 700; }
+.badge-locked   { color: #9E9E9E; }
+
+/* ── 희귀도 배지 ── */
+.rarity-normal  { color: #757575; }
+.rarity-rare    { color: #1565C0; font-weight: 700; }
+.rarity-legendary { color: #F9A825; font-weight: 700; }
+
+/* ── 단원 카드 (설정 화면) ── */
+.topic-row {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 0.6rem 1rem;
+    margin: 0.35rem 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
+}
+
+/* ── 진행 바 ── */
+[data-testid="stProgress"] > div {
+    background: linear-gradient(90deg, #FFB7C5, #C8B2E8) !important;
+    border-radius: 8px;
+}

@@ -1,0 +1,19 @@
+# Google 서비스 계정 키 (절대 커밋 금지)
+credentials.json
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
